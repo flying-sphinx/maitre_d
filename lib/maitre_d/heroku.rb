@@ -1,4 +1,12 @@
 module MaitreD::Heroku
+  def self.listener
+    @listener
+  end
+
+  def self.listener=(listener)
+    @listener = listener
+  end
+
   def self.id
     @id
   end
@@ -14,7 +22,16 @@ module MaitreD::Heroku
   def self.password=(password)
     @password = password
   end
+
+  def self.sso_salt
+    @sso_salt
+  end
+
+  def self.sso_salt=(salt)
+    @sso_salt = salt
+  end
 end
 
 require 'maitre_d/heroku/api_helpers'
 require 'maitre_d/heroku/api'
+require 'maitre_d/heroku/listener'
