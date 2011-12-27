@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = MaitreD::VERSION
   s.authors     = ['Pat Allan']
   s.email       = ['pat@freelancing-gods.com']
-  s.homepage    = "http://github.com/flying-sphinx/maitre_d"
+  s.homepage    = 'http://github.com/flying-sphinx/maitre_d'
   s.summary     = 'Rack API and Rails Engine for Heroku and Opperator add-ons'
   s.description = 'A Rack API (through Grape) for Heroku and Opperator add-on providers - which can also be attached as a Rails Engine.'
 
