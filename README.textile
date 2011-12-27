@@ -1,0 +1,15 @@
+h1. Maître d'
+
+Rack APIs powered by Grape for managing Heroku and Opperator add-ons. If used within a Rails application, it'll automatically be mounted as a Rails engine at the appropriate paths.
+
+h2. Contributing
+
+Contributions are very much welcome - but keep in mind the following:
+
+* Keep patches in a separate branch.
+* Write tests for your patches.
+* Don't mess with the version or history file. I'll take care of that when the patch is merged in.
+
+h2. Credits
+
+Copyright (c) 2011, Maître d' is developed and maintained by Pat Allan, and is released under the open MIT Licence.
