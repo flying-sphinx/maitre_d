@@ -1,4 +1,8 @@
 module MaitreD::Heroku
+  def self.configure
+    yield self
+  end
+
   def self.listener
     @listener
   end

@@ -1,4 +1,6 @@
-MaitreD::Heroku.id       = 'foo'
-MaitreD::Heroku.password = 'bar'
-MaitreD::Heroku.sso_salt = 'sea salt'
-MaitreD::Heroku.listener = HerokuListener
+MaitreD::Heroku.configure do |config|
+  config.id       = 'foo'
+  config.password = 'bar'
+  config.sso_salt = 'sea salt'
+  config.listener = HerokuListener
+end

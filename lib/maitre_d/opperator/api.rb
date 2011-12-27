@@ -5,15 +5,15 @@ class MaitreD::Opperator::API < Grape::API
 
   resources :instances do
     post do
-      MaitreD::Opperator.subscribe params[:features]
+      MaitreD::Opperator.listener.new.provision params[:features]
     end
 
     delete ':id' do
-      # MaitreD::Opperator.cancel params[:id]
+      MaitreD::Opperator.listener.new.deprovision params[:id]
     end
 
     put ':id' do
-      # MaitreD::Opperator.update params[:id], params[:features]
+      MaitreD::Opperator.listener.new.change_plan params[:id], params[:features]
     end
   end
 

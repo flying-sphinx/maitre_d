@@ -22,7 +22,7 @@ describe 'Opperator Provisioning API' do
       post '/opperator/instances', {'features' => {}},
         {'X-Opperator-Shared-Secret' => 'something-special'}
 
-      json_response['config'].should be_a(Hash)
+      json_response['config'].should == {'provisioned_for' => 'opperator'}
     end
   end
 
