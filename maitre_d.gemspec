@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "maitre_d/version"
+$:.push File.expand_path('../lib', __FILE__)
+require 'maitre_d/version'
 
 Gem::Specification.new do |s|
   s.name        = 'maitre_d'
@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ['lib']
 
+  s.add_development_dependency 'kensa',       '1.3.0'
   s.add_development_dependency 'rails',       '3.1.3'
   s.add_development_dependency 'rspec-rails', '2.7.0'
 end
