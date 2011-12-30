@@ -29,7 +29,7 @@ describe 'Heroku Provisioning API' do
     it "returns the resource configuration" do
       post '/heroku/resources', params, {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['config'].should == {'provisioned' => true}
+      json_response['config'].should == {'FOO_PROVISIONED' => "true"}
     end
 
     it "returns a custom message" do
@@ -54,7 +54,7 @@ describe 'Heroku Provisioning API' do
     it "returns the new resource configuration" do
       put '/heroku/resources/7', params, {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['config'].should == {'modified' => true}
+      json_response['config'].should == {'FOO_PROVISIONED' => "false"}
     end
 
     it "returns a custom message" do

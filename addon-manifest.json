@@ -1,0 +1,10 @@
+{
+  "id": "foo",
+  "api": {
+    "config_vars": [ "FOO_PROVISIONED" ],
+    "password": "bar",
+    "sso_salt": "sea salt",
+    "production": "https://yourapp.com/",
+    "test": "http://localhost:9292/"
+  }
+}

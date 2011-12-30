@@ -24,7 +24,7 @@ module MaitreD::Heroku::APIHelpers
   end
 
   def valid_authorization?
-    valid_authorization == env['HTTP_AUTHORIZATION']
+    valid_authorization.strip == env['HTTP_AUTHORIZATION'].strip
   end
 
   def valid_authorization

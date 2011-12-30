@@ -2,14 +2,14 @@ class HerokuListener < MaitreD::Heroku::Listener
   def provision(heroku_id, plan, callback_url, logplex_token, options)
     {
       :id      => '123',
-      :config  => {'provisioned' => true},
+      :config  => {'FOO_PROVISIONED' => 'true'},
       :message => 'Add-on provisioned!'
     }
   end
 
   def plan_change(resource_id, heroku_id, plan)
     {
-      :config  => {'modified' => true},
+      :config  => {'FOO_PROVISIONED' => 'false'},
       :message => 'Add-on upgraded or downgraded.'
     }
   end
