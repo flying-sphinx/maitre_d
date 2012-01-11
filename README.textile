@@ -6,11 +6,18 @@ Maître d' manages all the authorisation checking for API requests and provides 
 
 h2. Installing
 
+Add the following to your Gemfile - and take note that we need the git repository reference for Grape, as it includes some needed commits that aren't in the latest gem release.
+
+<pre><code>gem 'grape',
+  :git => 'git://github.com/intridea/grape.git',
+  :ref => '212c96cdfb253a59bc93790808c568e559d04468'
+gem 'maitre_d', '~> 0.1.2'</code></pre>
+
 h3. With Rails
 
 Because there's a Rails engine as part of Maître d', the API routing is set up automatically. Jump forward to the configuration and listener setup below.
 
-h3. Without Rack
+h3. Without Rails
 
 This library provides two APIs as mountable Rack applications for you - so you'll want to mount them at the appropriate paths: @MaitreD::Heroku::API@ at @/heroku@, and/or @MaitreD::Opperator::API@ at @/opperator@.
 
