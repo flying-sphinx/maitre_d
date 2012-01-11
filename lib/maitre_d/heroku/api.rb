@@ -10,10 +10,15 @@ class MaitreD::Heroku::API < Grape::API
       hash[:session] ||= {}
       hash[:session].each { |key, value| session[key] = value }
 
+      if env['action_dispatch.cookies']
+        env['action_dispatch.cookies']['heroku-nav-data'] = params['nav-data']
+      else
+        Rack::Utils.set_cookie_header! header, 'heroku-nav-data',
+          :value => params['nav-data']
+      end
+
       status 302
       header 'Location', hash[:uri]
-      Rack::Utils.set_cookie_header! header, 'heroku-nav-data',
-        :value => params['nav-data']
     end
 
     post do

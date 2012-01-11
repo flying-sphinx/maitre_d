@@ -1,3 +1,6 @@
+Edge
+* Use Rails' cookie jar if it's available.
+
 0.1.0 - January 11th 2012
 * Tentative Heroku support.
 
