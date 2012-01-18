@@ -41,7 +41,7 @@ The listeners that are mentioned in the code above are classes, which will handl
 
 h2. Heroku Listener
 
-Your Heroku listener class handle the following four methods:
+Your Heroku listener class should handle the following four methods:
 
 h3. @provision(heroku_id, plan, callback_url, logplex_token, options)@
 
