@@ -41,7 +41,7 @@ The listeners that are mentioned in the code above are classes, which will handl
 
 h2. Heroku Listener
 
-Your Heroku listener class should be a subclass of @MaitreD::Heroku::Listener@, and handle the following four methods:
+Your Heroku listener class handle the following four methods:
 
 h3. @provision(heroku_id, plan, callback_url, logplex_token, options)@
 
@@ -84,7 +84,7 @@ Maître d' will check the token and timestamp provided, and sets up the nav-data
 
 Here's a very basic example:
 
-<pre><code>class HerokuListener < MaitreD::Heroku::Listener
+<pre><code>class HerokuListener
   def provision(heroku_id, plan, callback_url, logplex_token, options)
     plan   = Plan.find_by_name plan
     widget = Widget.create(
@@ -140,4 +140,4 @@ Contributions are very much welcome - but keep in mind the following:
 
 h2. Credits
 
-Copyright (c) 2011, Maître d' is developed and maintained by Pat Allan, and is released under the open MIT Licence.
+Copyright (c) 2011-2012, Maître d' is developed and maintained by Pat Allan, and is released under the open MIT Licence.
