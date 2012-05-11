@@ -1,5 +1,7 @@
 h1. Maître d'
 
+"!https://secure.travis-ci.org/flying-sphinx/maitre_d.png!":http://travis-ci.org/flying-sphinx/maitre_d
+
 Rack APIs powered by Grape for managing Heroku and Opperator add-ons. If used within a Rails application, it'll automatically be mounted as a Rails engine at the appropriate paths.
 
 Maître d' manages all the authorisation checking for API requests and provides simple hooks for you to write just the code you need to handle provisioning, plan changes, deprovisioning and single-sign-on (SSO) requests.
