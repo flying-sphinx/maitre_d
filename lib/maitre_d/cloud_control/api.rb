@@ -1,5 +1,5 @@
-class MaitreD::Heroku::API < Grape::API
-  helpers MaitreD::Heroku::APIHelpers
+class MaitreD::CloudControl::API < Grape::API
+  helpers MaitreD::CloudControl::APIHelpers
 
   resources :resources do
     get ':id' do

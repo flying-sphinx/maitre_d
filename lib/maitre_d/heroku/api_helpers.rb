@@ -3,6 +3,14 @@ module MaitreD::Heroku::APIHelpers
     error!('401 Unauthorized', 401) unless valid_authorization?
   end
 
+  def listener
+    MaitreD::Heroku.listener.new
+  end
+
+  def provider_id
+    params[:heroku_id]
+  end
+
   def session
     env['rack.session']
   end
