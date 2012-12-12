@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path('../lib', __FILE__)
-require 'maitre_d/version'
 
 Gem::Specification.new do |s|
   s.name        = 'maitre_d'
-  s.version     = MaitreD::VERSION
+  s.version     = '0.1.2'
   s.authors     = ['Pat Allan']
   s.email       = ['pat@freelancing-gods.com']
   s.homepage    = 'http://github.com/flying-sphinx/maitre_d'
