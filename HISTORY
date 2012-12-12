@@ -1,3 +1,8 @@
+Edge:
+* Support region parameter from Heroku.
+* Adding tentative CloudControl support.
+* Don't bother with subclassing - just implement the interface.
+
 0.1.2 - January 11th 2012
 * Ruby 1.8 gemspec fix.
 

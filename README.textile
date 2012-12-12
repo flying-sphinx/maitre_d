@@ -52,7 +52,7 @@ h2. Heroku Listener
 
 Your Heroku listener class should handle the following four methods:
 
-h3. @provision(heroku_id, plan, callback_url, logplex_token, options)@
+h3. @provision(heroku_id, plan, region, callback_url, logplex_token, options)@
 
 This gets called when Heroku's requesting an app be provisioned within your service, and expects a hash to be returned with the following keys:
 
@@ -94,12 +94,13 @@ Maître d' will check the token and timestamp provided, and sets up the nav-data
 Here's a very basic example:
 
 <pre><code>class HerokuListener
-  def provision(heroku_id, plan, callback_url, logplex_token, options)
+  def provision(heroku_id, plan, region, callback_url, logplex_token, options)
     plan   = Plan.find_by_name plan
     widget = Widget.create(
       :heroku_id    => heroku_id,
       :callback_url => callback_url,
-      :plan         => plan
+      :plan         => plan,
+      :region       => region
     )
 
     {
