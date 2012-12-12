@@ -37,6 +37,13 @@ describe 'Heroku Provisioning API' do
 
       json_response['message'].should == 'Add-on provisioned!'
     end
+    
+    it "returns the region if it exists" do
+      post '/heroku/resources', params.merge(:region => 'us-west'),
+        {'HTTP_AUTHORIZATION' => authorisation}
+      
+      json_response['region'].should == 'us-west'
+    end
   end
 
   describe 'Changing Plans' do

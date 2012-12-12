@@ -1,9 +1,10 @@
 class HerokuListener < MaitreD::Heroku::Listener
-  def provision(heroku_id, plan, callback_url, logplex_token, options)
+  def provision(heroku_id, plan, region, callback_url, logplex_token, options)
     {
       :id      => '123',
       :config  => {'FOO_PROVISIONED' => 'true'},
-      :message => 'Add-on provisioned!'
+      :message => 'Add-on provisioned!',
+      :region  => region
     }
   end
 

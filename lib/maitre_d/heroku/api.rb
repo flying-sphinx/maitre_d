@@ -25,8 +25,8 @@ class MaitreD::Heroku::API < Grape::API
       authenticate!
 
       listener.provision(
-        provider_id,            params[:plan], params[:callback_url],
-        params[:logplex_token], params[:options]
+        provider_id,            params[:plan],          params[:region],
+        params[:callback_url],  params[:logplex_token], params[:options]
       )
     end
 
