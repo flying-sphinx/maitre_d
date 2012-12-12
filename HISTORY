@@ -1,4 +1,4 @@
-Edge:
+0.2.0 - December 12th 2012
 * Support region parameter from Heroku.
 * Adding tentative CloudControl support.
 * Don't bother with subclassing - just implement the interface.
