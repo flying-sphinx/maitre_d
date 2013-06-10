@@ -9,7 +9,7 @@ describe 'Broadstack SSO API' do
   }
 
   it "renders a 403 if the token is incorrect" do
-    post '/broadstack/sso', :token => 'foo',
+    post '/broadstack/sso', :token => 'foo', :id => '789',
       :timestamp => timestamp, 'nav-data' => nav_data
 
     response.status.should == 403
@@ -20,28 +20,28 @@ describe 'Broadstack SSO API' do
     pre_token = "789:sea salt:#{timestamp.to_s}"
     token     = Digest::SHA1.hexdigest(pre_token).to_s
 
-    post '/broadstack/sso', :token => token,
+    post '/broadstack/sso', :token => token, :id => '789',
       :timestamp => timestamp, 'nav-data' => nav_data
 
     response.status.should == 403
   end
 
   it "sets the heroku nav data cookie" do
-    post '/broadstack/sso', :token => token,
+    post '/broadstack/sso', :token => token, :id => '789',
       :timestamp => timestamp, 'nav-data' => nav_data
 
     cookies['heroku-nav-data'].should == nav_data
   end
 
   it "redirects to the appropriate URL" do
-    post '/broadstack/sso', :token => token,
+    post '/broadstack/sso', :token => token, :id => '789',
       :timestamp => timestamp, 'nav-data' => nav_data
 
     response.should redirect_to('/my/dashboard')
   end
 
   it "should set the provided session variables" do
-    post '/broadstack/sso', :token => token,
+    post '/broadstack/sso', :token => token, :id => '789',
       :timestamp => timestamp, 'nav-data' => nav_data
 
     session[:app_id].should == '789'
