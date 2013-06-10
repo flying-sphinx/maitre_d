@@ -1,8 +1,8 @@
 class MaitreD::Broadstack::API < Grape::API
   helpers MaitreD::Broadstack::APIHelpers
 
-  resources :resources do
-    get ':id' do
+  resources :sso do
+    post do
       error!('403 Forbidden', 403) unless valid_token? && valid_timestamp?
 
       hash = listener.single_sign_on(params[:id])
@@ -20,7 +20,9 @@ class MaitreD::Broadstack::API < Grape::API
       status 302
       header 'Location', hash[:uri]
     end
+  end
 
+  resources :resources do
     post do
       authenticate!
 
