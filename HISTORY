@@ -1,3 +1,7 @@
+0.3.0 - July 27th 2013
+* No longer supporting 1.8.7/ree/1.9.2. Use 1.9.3 or 2.0.0.
+* Broadstack support.
+
 0.2.0 - December 12th 2012
 * Support region parameter from Heroku.
 * Adding tentative CloudControl support.
