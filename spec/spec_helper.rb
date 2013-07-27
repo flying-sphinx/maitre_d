@@ -1,7 +1,7 @@
-require 'rubygems'
-require 'bundler'
+require 'bundler/setup'
 
-Bundler.require :default, :development
+require 'combustion'
+require 'maitre_d'
 
 Combustion.initialize! :action_controller
 
