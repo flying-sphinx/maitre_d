@@ -3,12 +3,12 @@ $:.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'maitre_d'
-  s.version     = '0.3.0'
+  s.version     = '0.4.0'
   s.authors     = ['Pat Allan']
   s.email       = ['pat@freelancing-gods.com']
   s.homepage    = 'http://github.com/flying-sphinx/maitre_d'
-  s.summary     = 'Rack API and Rails Engine for Heroku and Opperator add-ons'
-  s.description = 'A Rack API (through Grape) for Heroku and Opperator add-on providers - which can also be attached as a Rails Engine.'
+  s.summary     = 'Rack APIs for Heroku add-ons'
+  s.description = 'A Rack API (through Grape) for Heroku add-on providers.'
 
   s.rubyforge_project = "maitre_d"
 

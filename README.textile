@@ -13,7 +13,7 @@ Add the following to your Gemfile - and take note that we need the git repositor
 <pre><code>gem 'grape',
   :git => 'git://github.com/intridea/grape.git',
   :ref => '212c96cdfb253a59bc93790808c568e559d04468'
-gem 'maitre_d', '~> 0.1.2'</code></pre>
+gem 'maitre_d', '~> 0.4.0'</code></pre>
 
 h3. With Rails
 
