@@ -1,3 +1,5 @@
+require 'maitre_d/cloud_control'
+
 MaitreD::CloudControl.configure do |config|
   config.id       = 'baz'
   config.password = 'qux'

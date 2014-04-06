@@ -1,3 +1,5 @@
+require 'maitre_d/heroku'
+
 MaitreD::Heroku.configure do |config|
   config.id       = 'foo'
   config.password = 'bar'

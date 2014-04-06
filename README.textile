@@ -2,7 +2,7 @@ h1. Maître d'
 
 "!https://secure.travis-ci.org/flying-sphinx/maitre_d.png!":http://travis-ci.org/flying-sphinx/maitre_d
 
-Rack APIs powered by Grape for managing Heroku, CloudControl and Opperator add-ons. If used within a Rails application, it'll automatically be mounted as a Rails engine at the appropriate paths.
+Rack APIs powered by Grape for managing Heroku, CloudControl and Opperator add-ons.
 
 Maître d' manages all the authorisation checking for API requests and provides simple hooks for you to write just the code you need to handle provisioning, plan changes, deprovisioning and single-sign-on (SSO) requests.
 
@@ -17,7 +17,12 @@ gem 'maitre_d', '~> 0.1.2'</code></pre>
 
 h3. With Rails
 
-Because there's a Rails engine as part of Maître d', the API routing is set up automatically. Jump forward to the configuration and listener setup below.
+Add the appropriate Rack apps to your routes file:
+
+<pre><code>mount MaitreD::Broadstack::API   => '/broadstack'
+mount MaitreD::Heroku::API       => '/heroku'
+mount MaitreD::CloudControl::API => '/cloudcontrol'
+mount MaitreD::Opperator::API    => '/opperator'</code></pre>
 
 h3. Without Rails
 
@@ -27,12 +32,16 @@ h2. Configuration
 
 You'll need to provide Maître d' with the appropriate provider credentials - in a Rails app, this would go in an initializer, but for Rack/Sinatra apps just get the values set before the routing is defined.
 
-<pre><code>MaitreD::Heroku.configure do |config|
+<pre><code>require 'maitre_d/heroku'
+
+MaitreD::Heroku.configure do |config|
   config.id       = 'addon-id'
   config.password = 'random'
   config.sso_salt = 'gibberish'
   config.listener = HerokuListener
 end
+
+require 'maitre_d/cloud_control'
 
 MaitreD::CloudControl.configure do |config|
   config.id       = 'addon-id'
@@ -40,6 +49,8 @@ MaitreD::CloudControl.configure do |config|
   config.sso_salt = 'gibberish'
   config.listener = CloudControlListener
 end
+
+require 'maitre_d/opperator'
 
 MaitreD::Opperator.configure do |config|
   config.shared_secret = 'something-special'
@@ -154,4 +165,4 @@ Contributions are very much welcome - but keep in mind the following:
 
 h2. Credits
 
-Copyright (c) 2011-2012, Maître d' is developed and maintained by Pat Allan, and is released under the open MIT Licence.
+Copyright (c) 2011-2014, Maître d' is developed and maintained by Pat Allan, and is released under the open MIT Licence.

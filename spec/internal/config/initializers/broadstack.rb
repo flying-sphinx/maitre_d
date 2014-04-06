@@ -1,3 +1,5 @@
+require 'maitre_d/broadstack'
+
 MaitreD::Broadstack.configure do |config|
   config.id       = 'foo'
   config.password = 'bar'

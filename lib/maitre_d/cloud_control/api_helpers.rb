@@ -1,3 +1,5 @@
+require 'maitre_d/heroku/api_helpers'
+
 module MaitreD::CloudControl::APIHelpers
   include MaitreD::Heroku::APIHelpers
 
