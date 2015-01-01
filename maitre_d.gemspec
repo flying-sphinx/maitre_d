@@ -17,8 +17,11 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ['lib']
 
+  s.add_runtime_dependency 'sliver',     '~> 0.0.4'
+  s.add_runtime_dependency 'multi_json', '>= 1.3.0'
+
   s.add_development_dependency 'combustion',  '0.5.1'
   s.add_development_dependency 'kensa',       '1.3.0'
-  s.add_development_dependency 'rails',       '3.1.3'
-  s.add_development_dependency 'rspec-rails', '2.7.0'
+  s.add_development_dependency 'rails',       '~> 4.1.0'
+  s.add_development_dependency 'rspec-rails', '~> 3.1.0'
 end
