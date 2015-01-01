@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe 'Heroku Provisioning API' do
-  let(:authorisation) { "Basic #{Base64.encode64('foo:bar')}" }
+  let(:config)        { MaitreD::Heroku }
+  let(:authorisation) {
+    "Basic #{Base64.encode64("#{config.id}:#{config.password}")}"
+  }
   let(:json_response) { JSON.parse response.body }
 
   describe 'Provisioning' do
@@ -14,34 +17,37 @@ describe 'Heroku Provisioning API' do
     }
 
     it "returns a 401 if the HTTP authorisation does not match" do
-      post '/heroku/resources', params,
+      post '/heroku/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
       response.status.should == 401
     end
 
     it "returns the resource id" do
-      post '/heroku/resources', params, {'HTTP_AUTHORIZATION' => authorisation}
+      post '/heroku/resources', JSON.dump(params),
+        {'HTTP_AUTHORIZATION' => authorisation}
 
       json_response['id'].should == '123'
     end
 
     it "returns the resource configuration" do
-      post '/heroku/resources', params, {'HTTP_AUTHORIZATION' => authorisation}
+      post '/heroku/resources', JSON.dump(params),
+        {'HTTP_AUTHORIZATION' => authorisation}
 
       json_response['config'].should == {'FOO_PROVISIONED' => "true"}
     end
 
     it "returns a custom message" do
-      post '/heroku/resources', params, {'HTTP_AUTHORIZATION' => authorisation}
+      post '/heroku/resources', JSON.dump(params),
+        {'HTTP_AUTHORIZATION' => authorisation}
 
       json_response['message'].should == 'Add-on provisioned!'
     end
-    
+
     it "returns the region if it exists" do
-      post '/heroku/resources', params.merge(:region => 'us-west'),
+      post '/heroku/resources', JSON.dump(params.merge(:region => 'us-west')),
         {'HTTP_AUTHORIZATION' => authorisation}
-      
+
       json_response['region'].should == 'us-west'
     end
   end
@@ -52,20 +58,22 @@ describe 'Heroku Provisioning API' do
     }
 
     it "returns a 401 if the HTTP authorisation does not match" do
-      put '/heroku/resources/7', params,
+      put '/heroku/resources/7', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
       response.status.should == 401
     end
 
     it "returns the new resource configuration" do
-      put '/heroku/resources/7', params, {'HTTP_AUTHORIZATION' => authorisation}
+      put '/heroku/resources/7', JSON.dump(params),
+        {'HTTP_AUTHORIZATION' => authorisation}
 
       json_response['config'].should == {'FOO_PROVISIONED' => "false"}
     end
 
     it "returns a custom message" do
-      put '/heroku/resources/7', params, {'HTTP_AUTHORIZATION' => authorisation}
+      put '/heroku/resources/7', JSON.dump(params),
+        {'HTTP_AUTHORIZATION' => authorisation}
 
       json_response['message'].should == 'Add-on upgraded or downgraded.'
     end

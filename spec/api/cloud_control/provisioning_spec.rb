@@ -14,28 +14,28 @@ describe 'CloudControl Provisioning API' do
     }
 
     it "returns a 401 if the HTTP authorisation does not match" do
-      post '/cloudcontrol/resources', params,
+      post '/cloudcontrol/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
       response.status.should == 401
     end
 
     it "returns the resource id" do
-      post '/cloudcontrol/resources', params,
+      post '/cloudcontrol/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
       json_response['id'].should == '123'
     end
 
     it "returns the resource configuration" do
-      post '/cloudcontrol/resources', params,
+      post '/cloudcontrol/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
       json_response['config'].should == {'FOO_PROVISIONED' => "true"}
     end
 
     it "returns a custom message" do
-      post '/cloudcontrol/resources', params,
+      post '/cloudcontrol/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
       json_response['message'].should == 'Add-on provisioned!'
@@ -48,21 +48,21 @@ describe 'CloudControl Provisioning API' do
     }
 
     it "returns a 401 if the HTTP authorisation does not match" do
-      put '/cloudcontrol/resources/7', params,
+      put '/cloudcontrol/resources/7', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
       response.status.should == 401
     end
 
     it "returns the new resource configuration" do
-      put '/cloudcontrol/resources/7', params,
+      put '/cloudcontrol/resources/7', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
       json_response['config'].should == {'FOO_PROVISIONED' => "false"}
     end
 
     it "returns a custom message" do
-      put '/cloudcontrol/resources/7', params,
+      put '/cloudcontrol/resources/7', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
       json_response['message'].should == 'Add-on upgraded or downgraded.'
