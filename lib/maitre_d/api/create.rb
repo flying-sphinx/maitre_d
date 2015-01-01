@@ -1,4 +1,4 @@
-class MaitreD::Heroku::API::Create < MaitreD::Heroku::API::Authenticated
+class MaitreD::API::Create < MaitreD::API::Authenticated
   def call
     response.body = listener.provision(
       provider_id,             params['plan'],          params['region'],

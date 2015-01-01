@@ -1,4 +1,4 @@
-class MaitreD::Heroku::API::Authenticated
+class MaitreD::API::Authenticated
   include Sliver::Action
 
   def skip?

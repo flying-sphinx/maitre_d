@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  mount MaitreD::Heroku::API.new                        => '/heroku'
-  mount MaitreD::Heroku::API.new(MaitreD::CloudControl) => '/cloudcontrol'
+  mount MaitreD::API.new                        => '/heroku'
+  mount MaitreD::API.new(MaitreD::CloudControl) => '/cloudcontrol'
 
   class Dashboard
     def self.call(env)

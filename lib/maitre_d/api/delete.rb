@@ -1,4 +1,4 @@
-class MaitreD::Heroku::API::Delete < MaitreD::Heroku::API::Authenticated
+class MaitreD::API::Delete < MaitreD::API::Authenticated
   def call
     response.body = listener.deprovision resource_id
 

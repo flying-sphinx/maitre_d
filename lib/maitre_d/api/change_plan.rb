@@ -1,4 +1,4 @@
-class MaitreD::Heroku::API::ChangePlan < MaitreD::Heroku::API::Authenticated
+class MaitreD::API::ChangePlan < MaitreD::API::Authenticated
   def call
     response.body = listener.plan_change(
       resource_id, provider_id, params['plan']

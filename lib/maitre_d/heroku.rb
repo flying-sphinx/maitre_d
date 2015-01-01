@@ -40,5 +40,4 @@ module MaitreD::Heroku
   end
 end
 
-require 'maitre_d/heroku/api'
 require 'maitre_d/heroku/listener'
