@@ -39,5 +39,3 @@ module MaitreD::Heroku
     params['heroku_id']
   end
 end
-
-require 'maitre_d/heroku/listener'
