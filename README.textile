@@ -2,7 +2,7 @@ h1. Maître d'
 
 "!https://secure.travis-ci.org/flying-sphinx/maitre_d.png!":http://travis-ci.org/flying-sphinx/maitre_d
 
-Rack APIs powered by Grape for managing Heroku, CloudControl and Opperator add-ons.
+Rack APIs powered by Grape for managing Heroku and CloudControl add-ons.
 
 Maître d' manages all the authorisation checking for API requests and provides simple hooks for you to write just the code you need to handle provisioning, plan changes, deprovisioning and single-sign-on (SSO) requests.
 
@@ -20,12 +20,11 @@ h3. With Rails
 Add the appropriate Rack apps to your routes file:
 
 <pre><code>mount MaitreD::Heroku::API       => '/heroku'
-mount MaitreD::CloudControl::API => '/cloudcontrol'
-mount MaitreD::Opperator::API    => '/opperator'</code></pre>
+mount MaitreD::CloudControl::API => '/cloudcontrol'</code></pre>
 
 h3. Without Rails
 
-This library provides two APIs as mountable Rack applications for you - so you'll want to mount them at the appropriate paths: @MaitreD::Heroku::API@ at @/heroku@, @MaitreD::CloudControl::API@ at @/cloudcontrol@, and/or @MaitreD::Opperator::API@ at @/opperator@.
+This library provides two APIs as mountable Rack applications for you - so you'll want to mount them at the appropriate paths: @MaitreD::Heroku::API@ at @/heroku@ and/or @MaitreD::CloudControl::API@ at @/cloudcontrol@.
 
 h2. Configuration
 
@@ -47,13 +46,6 @@ MaitreD::CloudControl.configure do |config|
   config.password = 'random'
   config.sso_salt = 'gibberish'
   config.listener = CloudControlListener
-end
-
-require 'maitre_d/opperator'
-
-MaitreD::Opperator.configure do |config|
-  config.shared_secret = 'something-special'
-  config.listener      = OpperatorListener
 end</code></pre>
 
 The listeners that are mentioned in the code above are classes, which will handle valid API requests. Read on for more details on how to set them up.
@@ -149,10 +141,6 @@ You can have the listener class wherever you like - as long as it's available wi
 h2. CloudControl Listener
 
 CloudControl is pretty much the same as Heroku - it has the same expectations for a listener, so perhaps you can use the same class if you like. Anything that Heroku sends through as the heroku_id becomes cloudcontrol_id - but that's just a matter of treating the given parameter appropriately.
-
-h2. Opperator Listener
-
-This listener is currently in progress as the Opperator API is established.
 
 h2. Contributing
 
