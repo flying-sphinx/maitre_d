@@ -10,7 +10,7 @@ h2. Installing
 
 Add the following to your Gemfile:
 
-<pre><code>gem 'maitre_d', '~> 0.4.0'</code></pre>
+<pre><code>gem 'maitre_d', '~> 0.5.0'</code></pre>
 
 h3. With Rails
 
