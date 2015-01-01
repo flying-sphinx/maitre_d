@@ -25,7 +25,7 @@ class MaitreD::API::Authenticated
   end
 
   def params
-    request.params
+    @params ||= MultiJson.load request.body.read
   end
 
   def provider_id
