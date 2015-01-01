@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount MaitreD::API.new                        => '/heroku'
+  mount MaitreD::API.new(MaitreD::Heroku)       => '/heroku'
   mount MaitreD::API.new(MaitreD::CloudControl) => '/cloudcontrol'
 
   class Dashboard

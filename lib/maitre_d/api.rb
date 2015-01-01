@@ -1,5 +1,5 @@
 class MaitreD::API
-  def initialize(configuration = MaitreD::Heroku)
+  def initialize(configuration)
     @configuration = configuration
   end
 

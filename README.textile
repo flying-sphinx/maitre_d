@@ -17,13 +17,13 @@ h3. With Rails
 Add the appropriate Rack apps to your routes file:
 
 <pre><code># if you're supporting Heroku
-mount MaitreD::API.new => '/heroku'
+mount MaitreD::API.new(MaitreD::Heroku)       => '/heroku'
 # if you're supporting CloudControl
 mount MaitreD::API.new(MaitreD::CloudControl) => '/cloudcontrol'</code></pre>
 
 h3. Without Rails
 
-As shown above, you can use Maître d' Rack API for both Heroku and (with a custom configuration argument) Cloud Control. Mount them to wherever you see fit. Once upon a time Heroku expected the endpoints to be at /heroku, but now things are a little more flexible.
+As shown above, you can use Maître d' Rack API for both Heroku and Cloud Control. Mount them to wherever you see fit. Once upon a time Heroku expected its endpoints to be at /heroku, but now things are a little more flexible.
 
 h2. Configuration
 
