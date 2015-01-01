@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'multi_json', '>= 1.3.0'
 
   s.add_development_dependency 'combustion',  '0.5.1'
-  s.add_development_dependency 'kensa',       '1.3.0'
+  s.add_development_dependency 'kensa',       '2.1.0'
   s.add_development_dependency 'rails',       '~> 4.1.0'
   s.add_development_dependency 'rspec-rails', '~> 3.1.0'
 end
