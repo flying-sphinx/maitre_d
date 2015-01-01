@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Heroku Provisioning API' do
+describe 'Heroku Provisioning API', :type => :request do
   let(:config)        { MaitreD::Heroku }
   let(:authorisation) {
     "Basic #{Base64.encode64("#{config.id}:#{config.password}")}"
@@ -20,35 +20,35 @@ describe 'Heroku Provisioning API' do
       post '/heroku/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
-      response.status.should == 401
+      expect(response.status).to eq(401)
     end
 
     it "returns the resource id" do
       post '/heroku/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['id'].should == '123'
+      expect(json_response['id']).to eq('123')
     end
 
     it "returns the resource configuration" do
       post '/heroku/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['config'].should == {'FOO_PROVISIONED' => "true"}
+      expect(json_response['config']).to eq({'FOO_PROVISIONED' => "true"})
     end
 
     it "returns a custom message" do
       post '/heroku/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['message'].should == 'Add-on provisioned!'
+      expect(json_response['message']).to eq('Add-on provisioned!')
     end
 
     it "returns the region if it exists" do
       post '/heroku/resources', JSON.dump(params.merge(:region => 'us-west')),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['region'].should == 'us-west'
+      expect(json_response['region']).to eq('us-west')
     end
   end
 
@@ -61,21 +61,21 @@ describe 'Heroku Provisioning API' do
       put '/heroku/resources/7', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
-      response.status.should == 401
+      expect(response.status).to eq(401)
     end
 
     it "returns the new resource configuration" do
       put '/heroku/resources/7', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['config'].should == {'FOO_PROVISIONED' => "false"}
+      expect(json_response['config']).to eq({'FOO_PROVISIONED' => "false"})
     end
 
     it "returns a custom message" do
       put '/heroku/resources/7', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['message'].should == 'Add-on upgraded or downgraded.'
+      expect(json_response['message']).to eq('Add-on upgraded or downgraded.')
     end
   end
 
@@ -84,19 +84,19 @@ describe 'Heroku Provisioning API' do
       delete '/heroku/resources/28', {},
         {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
-      response.status.should == 401
+      expect(response.status).to eq(401)
     end
 
     it "returns with a status of 200" do
       delete '/heroku/resources/28', {}, {'HTTP_AUTHORIZATION' => authorisation}
 
-      response.status.should == 200
+      expect(response.status).to eq(200)
     end
 
     it "returns a custom message" do
       delete '/heroku/resources/28', {}, {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['message'].should == 'Add-on removed.'
+      expect(json_response['message']).to eq('Add-on removed.')
     end
   end
 end

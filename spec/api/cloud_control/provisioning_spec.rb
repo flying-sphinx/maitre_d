@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'CloudControl Provisioning API' do
+describe 'CloudControl Provisioning API', :type => :request do
   let(:authorisation) { "Basic #{Base64.encode64('baz:qux')}" }
   let(:json_response) { JSON.parse response.body }
 
@@ -17,28 +17,28 @@ describe 'CloudControl Provisioning API' do
       post '/cloudcontrol/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
-      response.status.should == 401
+      expect(response.status).to eq(401)
     end
 
     it "returns the resource id" do
       post '/cloudcontrol/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['id'].should == '123'
+      expect(json_response['id']).to eq('123')
     end
 
     it "returns the resource configuration" do
       post '/cloudcontrol/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['config'].should == {'FOO_PROVISIONED' => "true"}
+      expect(json_response['config']).to eq('FOO_PROVISIONED' => "true")
     end
 
     it "returns a custom message" do
       post '/cloudcontrol/resources', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['message'].should == 'Add-on provisioned!'
+      expect(json_response['message']).to eq('Add-on provisioned!')
     end
   end
 
@@ -51,21 +51,21 @@ describe 'CloudControl Provisioning API' do
       put '/cloudcontrol/resources/7', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
-      response.status.should == 401
+      expect(response.status).to eq(401)
     end
 
     it "returns the new resource configuration" do
       put '/cloudcontrol/resources/7', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['config'].should == {'FOO_PROVISIONED' => "false"}
+      expect(json_response['config']).to eq('FOO_PROVISIONED' => "false")
     end
 
     it "returns a custom message" do
       put '/cloudcontrol/resources/7', JSON.dump(params),
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['message'].should == 'Add-on upgraded or downgraded.'
+      expect(json_response['message']).to eq('Add-on upgraded or downgraded.')
     end
   end
 
@@ -74,21 +74,21 @@ describe 'CloudControl Provisioning API' do
       delete '/cloudcontrol/resources/28', {},
         {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
-      response.status.should == 401
+      expect(response.status).to eq(401)
     end
 
     it "returns with a status of 200" do
       delete '/cloudcontrol/resources/28', {},
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      response.status.should == 200
+      expect(response.status).to eq(200)
     end
 
     it "returns a custom message" do
       delete '/cloudcontrol/resources/28', {},
         {'HTTP_AUTHORIZATION' => authorisation}
 
-      json_response['message'].should == 'Add-on removed.'
+      expect(json_response['message']).to eq('Add-on removed.')
     end
   end
 end

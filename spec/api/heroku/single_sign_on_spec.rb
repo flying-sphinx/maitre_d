@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Heroku SSO API' do
+describe 'Heroku SSO API', :type => :request do
   let(:timestamp) { Time.now.to_i }
   let(:nav_data)  { 'heroku-nav-data-goes-here' }
   let(:token)     {
@@ -12,7 +12,7 @@ describe 'Heroku SSO API' do
     post '/heroku/resources/sso', :id => '789', :token => 'foo',
       :timestamp => timestamp, 'nav-data' => nav_data
 
-    response.status.should == 403
+    expect(response.status).to eq(403)
   end
 
   it "renders a 403 if the timestamp is older than 5 minutes" do
@@ -23,27 +23,27 @@ describe 'Heroku SSO API' do
     post '/heroku/resources/sso', :id => '789', :token => token,
       :timestamp => timestamp, 'nav-data' => nav_data
 
-    response.status.should == 403
+    expect(response.status).to eq(403)
   end
 
   it "sets the heroku nav data cookie" do
     post '/heroku/resources/sso', :id => '789', :token => token,
       :timestamp => timestamp, 'nav-data' => nav_data
 
-    cookies['heroku-nav-data'].should == nav_data
+    expect(cookies['heroku-nav-data']).to eq(nav_data)
   end
 
   it "redirects to the appropriate URL" do
     post '/heroku/resources/sso', :id => '789', :token => token,
       :timestamp => timestamp, 'nav-data' => nav_data
 
-    response.should redirect_to('/my/dashboard')
+    expect(response).to redirect_to('/my/dashboard')
   end
 
   it "should set the provided session variables" do
     post '/heroku/resources/sso', :id => '789', :token => token,
       :timestamp => timestamp, 'nav-data' => nav_data
 
-    session[:app_id].should == '789'
+    expect(session[:app_id]).to eq('789')
   end
 end
