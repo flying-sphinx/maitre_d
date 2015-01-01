@@ -34,7 +34,8 @@ module MaitreD::CloudControl
   def self.sso_salt=(salt)
     @sso_salt = salt
   end
-end
 
-require 'maitre_d/cloud_control/api_helpers'
-require 'maitre_d/cloud_control/api'
+  def self.provider_id_from(params)
+    params['cloudcontrol_id']
+  end
+end
