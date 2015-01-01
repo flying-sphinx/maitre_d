@@ -1,47 +1,30 @@
-class MaitreD::Heroku::API < Grape::API
-  helpers MaitreD::Heroku::APIHelpers
+class MaitreD::Heroku::API
+  def initialize(configuration = MaitreD::Heroku)
+    @configuration = configuration
+  end
 
-  resources :resources do
-    get ':id' do
-      error!('403 Forbidden', 403) unless valid_token? && valid_timestamp?
+  def call(environment)
+    environment['maitre_d.configuration'] = configuration
 
-      hash = listener.single_sign_on(params[:id])
+    endpoints.call environment
+  end
 
-      hash[:session] ||= {}
-      hash[:session].each { |key, value| session[key] = value }
+  private
 
-      if env['action_dispatch.cookies']
-        env['action_dispatch.cookies']['heroku-nav-data'] = params['nav-data']
-      else
-        Rack::Utils.set_cookie_header! header, 'heroku-nav-data',
-          :value => params['nav-data']
-      end
+  attr_reader :configuration
 
-      status 302
-      header 'Location', hash[:uri]
-    end
-
-    post do
-      authenticate!
-
-      listener.provision(
-        provider_id,            params[:plan],          params[:region],
-        params[:callback_url],  params[:logplex_token], params[:options]
-      )
-    end
-
-    put ':id' do
-      authenticate!
-
-      listener.plan_change(
-        params[:id], provider_id, params[:plan]
-      )
-    end
-
-    delete ':id' do
-      authenticate!
-
-      listener.deprovision params[:id]
+  def endpoints
+    @endpoints ||= Sliver::API.new do |api|
+      api.connect :get,    %r{/resources/\d+}, MaitreD::Heroku::API::SSO
+      api.connect :post,   '/resources',       MaitreD::Heroku::API::Create
+      api.connect :put,    %r{/resources/\d+}, MaitreD::Heroku::API::ChangePlan
+      api.connect :delete, %r{/resources/\d+}, MaitreD::Heroku::API::Delete
     end
   end
 end
+
+require 'maitre_d/heroku/api/authenticated'
+require 'maitre_d/heroku/api/change_plan'
+require 'maitre_d/heroku/api/create'
+require 'maitre_d/heroku/api/delete'
+require 'maitre_d/heroku/api/sso'

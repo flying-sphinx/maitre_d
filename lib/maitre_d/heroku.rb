@@ -34,8 +34,11 @@ module MaitreD::Heroku
   def self.sso_salt=(salt)
     @sso_salt = salt
   end
+
+  def self.provider_id_from(params)
+    params['heroku_id']
+  end
 end
 
-require 'maitre_d/heroku/api_helpers'
 require 'maitre_d/heroku/api'
 require 'maitre_d/heroku/listener'
