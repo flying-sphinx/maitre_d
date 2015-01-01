@@ -18,10 +18,10 @@ class MaitreD::API::SSO
 
     if environment['action_dispatch.cookies']
       environment['action_dispatch.cookies']['heroku-nav-data'] =
-        request.params['nav-data']
+        params['nav-data']
     else
       Rack::Utils.set_cookie_header! response.headers, 'heroku-nav-data',
-        :value => request.params['nav-data']
+        :value => params['nav-data']
     end
 
     response.status    = 302
@@ -38,12 +38,16 @@ class MaitreD::API::SSO
 
   def expected_token
     @expected_token ||= Digest::SHA1.hexdigest(
-      "#{resource_id}:#{configuration.sso_salt}:#{request.params['timestamp']}"
+      "#{resource_id}:#{configuration.sso_salt}:#{params['timestamp']}"
     ).to_s
   end
 
   def listener
     configuration.listener.new
+  end
+
+  def params
+    request.params
   end
 
   def resource_id
@@ -55,10 +59,10 @@ class MaitreD::API::SSO
   end
 
   def valid_timestamp?
-    request.params['timestamp'].to_i >= (Time.now - 5*60).to_i
+    params['timestamp'].to_i >= (Time.now - 5*60).to_i
   end
 
   def valid_token?
-    expected_token == request.params['token']
+    expected_token == params['token']
   end
 end
