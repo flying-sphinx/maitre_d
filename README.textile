@@ -19,8 +19,7 @@ h3. With Rails
 
 Add the appropriate Rack apps to your routes file:
 
-<pre><code>mount MaitreD::Broadstack::API   => '/broadstack'
-mount MaitreD::Heroku::API       => '/heroku'
+<pre><code>mount MaitreD::Heroku::API       => '/heroku'
 mount MaitreD::CloudControl::API => '/cloudcontrol'
 mount MaitreD::Opperator::API    => '/opperator'</code></pre>
 
