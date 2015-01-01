@@ -1,5 +1,5 @@
 class CloudControlListener
-  def provision(cloud_control_id, plan, callback_url, logplex_token, options)
+  def provision(cloud_control_id, plan, region, callback_url, logplex_token, options)
     {
       :id      => '123',
       :config  => {'FOO_PROVISIONED' => 'true'},

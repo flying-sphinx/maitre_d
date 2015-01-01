@@ -8,23 +8,22 @@ Maître d' manages all the authorisation checking for API requests and provides 
 
 h2. Installing
 
-Add the following to your Gemfile - and take note that we need the git repository reference for Grape, as it includes some needed commits that aren't in the latest gem release.
+Add the following to your Gemfile:
 
-<pre><code>gem 'grape',
-  :git => 'git://github.com/intridea/grape.git',
-  :ref => '212c96cdfb253a59bc93790808c568e559d04468'
-gem 'maitre_d', '~> 0.4.0'</code></pre>
+<pre><code>gem 'maitre_d', '~> 0.4.0'</code></pre>
 
 h3. With Rails
 
 Add the appropriate Rack apps to your routes file:
 
-<pre><code>mount MaitreD::Heroku::API       => '/heroku'
-mount MaitreD::CloudControl::API => '/cloudcontrol'</code></pre>
+<pre><code># if you're supporting Heroku
+mount MaitreD::Heroku::API.new       => '/heroku'
+# if you're supporting CloudControl
+mount MaitreD::Heroku::API.new(MaitreD::CloudControl) => '/cloudcontrol'</code></pre>
 
 h3. Without Rails
 
-This library provides two APIs as mountable Rack applications for you - so you'll want to mount them at the appropriate paths: @MaitreD::Heroku::API@ at @/heroku@ and/or @MaitreD::CloudControl::API@ at @/cloudcontrol@.
+As shown above, you can use Maître d' Heroku Rack API for both Heroku and (with a custom configuration argument) Cloud Control. Mount them to wherever you see fit. Once upon a time Heroku expected the endpoints to be at /heroku, but now things are a little more flexible.
 
 h2. Configuration
 
@@ -50,17 +49,17 @@ end</code></pre>
 
 The listeners that are mentioned in the code above are classes, which will handle valid API requests. Read on for more details on how to set them up.
 
-h2. Heroku Listener
+h2. Listeners
 
-Your Heroku listener class should handle the following four methods:
+Your listener classes should handle the following four methods:
 
 h3. @provision(heroku_id, plan, region, callback_url, logplex_token, options)@
 
-This gets called when Heroku's requesting an app be provisioned within your service, and expects a hash to be returned with the following keys:
+This gets called when the provider is requesting an app be provisioned within your service, and expects a hash to be returned with the following keys:
 
 <dl>
   <dt><code>id</code></dt>
-  <dd>Your local resource id, which Heroku will use in related requests (to change plans, deprovision or initialise single-sign-on).</dd>
+  <dd>Your local resource id, which the provider will use in related requests (to change plans, deprovision or initialise single-sign-on).</dd>
   <dt><code>config</code></dt>
   <dd>A hash of the newly provisioned resource's configuration values (that are provided as environment variables to the app in question).</dd>
   <dt><code>message</code></dt>
@@ -138,10 +137,6 @@ end</code></pre>
 
 You can have the listener class wherever you like - as long as it's available within the context of your Rails/Rack site, it'll work as expected.
 
-h2. CloudControl Listener
-
-CloudControl is pretty much the same as Heroku - it has the same expectations for a listener, so perhaps you can use the same class if you like. Anything that Heroku sends through as the heroku_id becomes cloudcontrol_id - but that's just a matter of treating the given parameter appropriately.
-
 h2. Contributing
 
 Contributions are very much welcome - but keep in mind the following:
@@ -152,4 +147,4 @@ Contributions are very much welcome - but keep in mind the following:
 
 h2. Credits
 
-Copyright (c) 2011-2014, Maître d' is developed and maintained by Pat Allan, and is released under the open MIT Licence.
+Copyright (c) 2011-2015, Maître d' is developed and maintained by Pat Allan, and is released under the open MIT Licence.
