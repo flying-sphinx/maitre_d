@@ -4,12 +4,12 @@ describe 'CloudControl SSO API' do
   let(:timestamp) { Time.now.to_i }
   let(:nav_data)  { 'heroku-nav-data-goes-here' }
   let(:token)     {
-    pre_token = "789:rock salt:#{timestamp.to_s}"
+    pre_token = "789:#{MaitreD::CloudControl.sso_salt}:#{timestamp.to_s}"
     Digest::SHA1.hexdigest(pre_token).to_s
   }
 
   it "renders a 403 if the token is incorrect" do
-    get '/cloudcontrol/resources/789', :token => 'foo',
+    post '/cloudcontrol/resources/sso', :id => '789', :token => 'foo',
       :timestamp => timestamp, 'nav-data' => nav_data
 
     response.status.should == 403
@@ -17,31 +17,31 @@ describe 'CloudControl SSO API' do
 
   it "renders a 403 if the timestamp is older than 5 minutes" do
     timestamp = 5.minutes.ago.to_i - 1
-    pre_token = "789:rock salt:#{timestamp.to_s}"
+    pre_token = "789:#{MaitreD::CloudControl.sso_salt}:#{timestamp.to_s}"
     token     = Digest::SHA1.hexdigest(pre_token).to_s
 
-    get '/cloudcontrol/resources/789', :token => token,
+    post '/cloudcontrol/resources/sso', :id => '789', :token => token,
       :timestamp => timestamp, 'nav-data' => nav_data
 
     response.status.should == 403
   end
 
   it "sets the heroku nav data cookie" do
-    get '/cloudcontrol/resources/789', :token => token,
+    post '/cloudcontrol/resources/sso', :id => '789', :token => token,
       :timestamp => timestamp, 'nav-data' => nav_data
 
     cookies['heroku-nav-data'].should == nav_data
   end
 
   it "redirects to the appropriate URL" do
-    get '/cloudcontrol/resources/789', :token => token,
+    post '/cloudcontrol/resources/sso', :id => '789', :token => token,
       :timestamp => timestamp, 'nav-data' => nav_data
 
     response.should redirect_to('/my/dashboard')
   end
 
   it "should set the provided session variables" do
-    get '/cloudcontrol/resources/789', :token => token,
+    post '/cloudcontrol/resources/sso', :id => '789', :token => token,
       :timestamp => timestamp, 'nav-data' => nav_data
 
     session[:app_id].should == '789'

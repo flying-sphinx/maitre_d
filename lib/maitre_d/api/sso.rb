@@ -5,13 +5,14 @@ class MaitreD::API::SSO
     return false if valid_token? && valid_timestamp?
 
     response.status = 403
-    response.body   = '403 Forbidden'
+    response.body   = ['403 Forbidden']
+    response.headers['Content-Length'] = response.body.first.length.to_s
 
     true
   end
 
   def call
-    hash = listener.single_sign_on resource_id
+    hash = listener.single_sign_on params['id']
 
     hash[:session] ||= {}
     hash[:session].each { |key, value| session[key] = value }
@@ -38,7 +39,7 @@ class MaitreD::API::SSO
 
   def expected_token
     @expected_token ||= Digest::SHA1.hexdigest(
-      "#{resource_id}:#{configuration.sso_salt}:#{params['timestamp']}"
+      "#{params['id']}:#{configuration.sso_salt}:#{params['timestamp']}"
     ).to_s
   end
 
@@ -48,10 +49,6 @@ class MaitreD::API::SSO
 
   def params
     request.params
-  end
-
-  def resource_id
-    request.path[%r{/resources/(\d+)}, 1]
   end
 
   def session

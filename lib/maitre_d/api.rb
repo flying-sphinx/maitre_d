@@ -15,7 +15,7 @@ class MaitreD::API
 
   def endpoints
     @endpoints ||= Sliver::API.new do |api|
-      api.connect :get,    %r{/resources/\d+}, MaitreD::API::SSO
+      api.connect :post,   '/resources/sso',   MaitreD::API::SSO
       api.connect :post,   '/resources',       MaitreD::API::Create
       api.connect :put,    %r{/resources/\d+}, MaitreD::API::ChangePlan
       api.connect :delete, %r{/resources/\d+}, MaitreD::API::Delete
