@@ -1,4 +1,4 @@
-class HerokuListener < MaitreD::Heroku::Listener
+class HerokuListener
   def provision(heroku_id, plan, region, callback_url, logplex_token, options)
     {
       :id      => '123',
