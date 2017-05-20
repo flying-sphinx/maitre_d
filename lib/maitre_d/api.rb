@@ -23,8 +23,10 @@ class MaitreD::API
   end
 end
 
+require 'maitre_d/api/authentication_guard'
 require 'maitre_d/api/authenticated'
 require 'maitre_d/api/change_plan'
 require 'maitre_d/api/create'
 require 'maitre_d/api/delete'
+require 'maitre_d/api/sso_guard'
 require 'maitre_d/api/sso'

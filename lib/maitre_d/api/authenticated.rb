@@ -1,12 +1,8 @@
 class MaitreD::API::Authenticated
   include Sliver::Action
 
-  def skip?
-    return false if valid_authorization?
-
-    response.body   = ['401 Unauthorized']
-    response.status = 401
-    true
+  def self.guards
+    [MaitreD::API::AuthenticationGuard]
   end
 
   def call
@@ -14,11 +10,11 @@ class MaitreD::API::Authenticated
     response.status ||= 200
   end
 
-  private
-
   def configuration
     environment['maitre_d.configuration']
   end
+
+  private
 
   def listener
     configuration.listener.new
@@ -30,16 +26,5 @@ class MaitreD::API::Authenticated
 
   def provider_id
     configuration.provider_id_from params
-  end
-
-  def valid_authorization?
-    valid_authorization.strip == environment['HTTP_AUTHORIZATION'].strip
-  end
-
-  def valid_authorization
-    encoded_authorization = Base64.encode64(
-      "#{configuration.id}:#{configuration.password}"
-    )
-    "Basic #{encoded_authorization}"
   end
 end

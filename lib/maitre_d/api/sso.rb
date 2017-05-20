@@ -1,14 +1,8 @@
 class MaitreD::API::SSO
   include Sliver::Action
 
-  def skip?
-    return false if valid_token? && valid_timestamp?
-
-    response.status = 403
-    response.body   = ['403 Forbidden']
-    response.headers['Content-Length'] = response.body.first.length.to_s
-
-    true
+  def self.guards
+    [MaitreD::API::SSOGuard]
   end
 
   def call
@@ -31,17 +25,11 @@ class MaitreD::API::SSO
     response.headers['Location'] = hash[:uri]
   end
 
-  private
-
   def configuration
     environment['maitre_d.configuration']
   end
 
-  def expected_token
-    @expected_token ||= Digest::SHA1.hexdigest(
-      "#{params['id']}:#{configuration.sso_salt}:#{params['timestamp']}"
-    ).to_s
-  end
+  private
 
   def listener
     configuration.listener.new
@@ -53,13 +41,5 @@ class MaitreD::API::SSO
 
   def session
     environment['rack.session'] ||= {}
-  end
-
-  def valid_timestamp?
-    params['timestamp'].to_i >= (Time.now - 5*60).to_i
-  end
-
-  def valid_token?
-    expected_token == params['token']
   end
 end
