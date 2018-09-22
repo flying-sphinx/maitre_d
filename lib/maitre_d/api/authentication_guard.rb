@@ -11,14 +11,15 @@ class MaitreD::API::AuthenticationGuard < Sliver::Hook
 
   private
 
-  def valid_authorization?
-    valid_authorization.strip == action.request.env['HTTP_AUTHORIZATION'].strip
+  def expected_credentials
+    "#{action.configuration.id}:#{action.configuration.password}"
   end
 
-  def valid_authorization
-    encoded_authorization = Base64.encode64(
-      "#{action.configuration.id}:#{action.configuration.password}"
-    )
-    "Basic #{encoded_authorization}"
+  def provided_credentials
+    Base64.decode64 action.request.env['HTTP_AUTHORIZATION'].gsub(/^Basic /, '')
+  end
+
+  def valid_authorization?
+    provided_credentials == expected_credentials
   end
 end
