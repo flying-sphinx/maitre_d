@@ -10,8 +10,6 @@ Gem::Specification.new do |s|
   s.summary     = 'Rack APIs for Heroku add-ons'
   s.description = 'A Rack API (through Grape) for Heroku add-on providers.'
 
-  s.rubyforge_project = "maitre_d"
-
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
