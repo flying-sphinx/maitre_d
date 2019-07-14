@@ -1,6 +1,6 @@
 h1. Maître d'
 
-"!https://secure.travis-ci.org/flying-sphinx/maitre_d.png!":http://travis-ci.org/flying-sphinx/maitre_d
+"!https://secure.travis-ci.org/flying-sphinx/maitre_d.svg!":http://travis-ci.org/flying-sphinx/maitre_d
 
 Rack APIs powered by Sliver for managing Heroku and CloudControl add-ons.
 
