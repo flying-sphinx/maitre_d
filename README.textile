@@ -2,7 +2,7 @@ h1. Maître d'
 
 "!https://secure.travis-ci.org/flying-sphinx/maitre_d.svg!":http://travis-ci.org/flying-sphinx/maitre_d
 
-Rack APIs powered by Sliver for managing Heroku and CloudControl add-ons.
+Rack APIs powered by Sliver for managing Heroku add-ons.
 
 Maître d' manages all the authorisation checking for API requests and provides simple hooks for you to write just the code you need to handle provisioning, plan changes, deprovisioning and single-sign-on (SSO) requests.
 
@@ -14,16 +14,13 @@ Add the following to your Gemfile:
 
 h3. With Rails
 
-Add the appropriate Rack apps to your routes file:
+Add the Rack app to your routes file:
 
-<pre><code># if you're supporting Heroku
-mount MaitreD::API.new(MaitreD::Heroku)       => '/heroku'
-# if you're supporting CloudControl
-mount MaitreD::API.new(MaitreD::CloudControl) => '/cloudcontrol'</code></pre>
+<pre><code>mount MaitreD::API.new(MaitreD::Heroku) => '/heroku'</code></pre>
 
 h3. Without Rails
 
-As shown above, you can use Maître d' Rack API for both Heroku and Cloud Control. Mount them to wherever you see fit. Once upon a time Heroku expected its endpoints to be at /heroku, but now things are a little more flexible.
+As shown above, you can use Maître d' Rack API, mounting them to wherever you see fit. Once upon a time Heroku expected its endpoints to be at /heroku, but now things are a little more flexible.
 
 h2. Configuration
 
@@ -36,22 +33,13 @@ MaitreD::Heroku.configure do |config|
   config.password = 'random'
   config.sso_salt = 'gibberish'
   config.listener = HerokuListener
-end
-
-require 'maitre_d/cloud_control'
-
-MaitreD::CloudControl.configure do |config|
-  config.id       = 'addon-id'
-  config.password = 'random'
-  config.sso_salt = 'gibberish'
-  config.listener = CloudControlListener
 end</code></pre>
 
-The listeners that are mentioned in the code above are classes, which will handle valid API requests. Read on for more details on how to set them up.
+The listener that is mentioned in the code above is a class, which will handle valid API requests. Read on for more details on how to set them up.
 
 h2. Listeners
 
-Your listener classes should handle the following four methods:
+Your listener class should handle the following four methods:
 
 h3. @provision(heroku_id, plan, region, callback_url, logplex_token, options)@
 
@@ -147,4 +135,4 @@ Contributions are very much welcome - but keep in mind the following:
 
 h2. Credits
 
-Copyright (c) 2011-2015, Maître d' is developed and maintained by Pat Allan, and is released under the open MIT Licence.
+Copyright (c) 2011-2020, Maître d' is developed and maintained by Pat Allan, and is released under the open MIT Licence.
