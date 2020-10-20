@@ -10,6 +10,7 @@ describe 'Heroku Provisioning API', :type => :request do
   describe 'Provisioning' do
     let(:params) {
       {
+        :uuid         => SecureRandom.uuid,
         :plan         => 'basic',
         :callback_url => 'https://domain/vendor/apps/app123%40heroku.com',
         :heroku_id    => 'app123@heroku.com'
@@ -63,7 +64,7 @@ describe 'Heroku Provisioning API', :type => :request do
     }
 
     it "returns a 401 if the HTTP authorisation does not match" do
-      put '/heroku/resources/7',
+      put "/heroku/resources/#{SecureRandom.uuid}",
         :params => JSON.dump(params),
         :headers => {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
@@ -71,7 +72,7 @@ describe 'Heroku Provisioning API', :type => :request do
     end
 
     it "returns the new resource configuration" do
-      put '/heroku/resources/7',
+      put "/heroku/resources/#{SecureRandom.uuid}",
         :params => JSON.dump(params),
         :headers => {'HTTP_AUTHORIZATION' => authorisation}
 
@@ -79,7 +80,7 @@ describe 'Heroku Provisioning API', :type => :request do
     end
 
     it "returns a custom message" do
-      put '/heroku/resources/7',
+      put "/heroku/resources/#{SecureRandom.uuid}",
         :params => JSON.dump(params),
         :headers => {'HTTP_AUTHORIZATION' => authorisation}
 
@@ -89,21 +90,21 @@ describe 'Heroku Provisioning API', :type => :request do
 
   describe 'Deprovisioning' do
     it "returns a 401 if the HTTP authorisation does not match" do
-      delete '/heroku/resources/28',
+      delete "/heroku/resources/#{SecureRandom.uuid}",
         :headers => {'HTTP_AUTHORIZATION' => 'Basic foobarbaz'}
 
       expect(response.status).to eq(401)
     end
 
     it "returns with a status of 200" do
-      delete '/heroku/resources/28',
+      delete "/heroku/resources/#{SecureRandom.uuid}",
         :headers => {'HTTP_AUTHORIZATION' => authorisation}
 
       expect(response.status).to eq(200)
     end
 
     it "returns a custom message" do
-      delete '/heroku/resources/28',
+      delete "/heroku/resources/#{SecureRandom.uuid}",
         :headers => {'HTTP_AUTHORIZATION' => authorisation}
 
       expect(json_response['message']).to eq('Add-on removed.')
