@@ -3,7 +3,7 @@ $:.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'maitre_d'
-  s.version     = '0.7.0'
+  s.version     = '0.7.1'
   s.authors     = ['Pat Allan']
   s.email       = ['pat@freelancing-gods.com']
   s.homepage    = 'http://github.com/flying-sphinx/maitre_d'
