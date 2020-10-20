@@ -1,7 +1,7 @@
 class MaitreD::API::ChangePlan < MaitreD::API::Authenticated
   def call
     response.body = listener.plan_change(
-      resource_id, provider_id, params['plan']
+      resource_id, params['plan']
     )
 
     super
@@ -10,6 +10,6 @@ class MaitreD::API::ChangePlan < MaitreD::API::Authenticated
   private
 
   def resource_id
-    request.path[%r{resources/(\d+)}, 1]
+    request.path[%r{resources/([\w-]+)}, 1]
   end
 end

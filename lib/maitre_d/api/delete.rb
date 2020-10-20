@@ -8,6 +8,6 @@ class MaitreD::API::Delete < MaitreD::API::Authenticated
   private
 
   def resource_id
-    request.path[%r{resources/(\d+)}, 1]
+    request.path[%r{resources/([\w-]+)}, 1]
   end
 end

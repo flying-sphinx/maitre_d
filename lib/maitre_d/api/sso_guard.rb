@@ -13,7 +13,7 @@ class MaitreD::API::SSOGuard < Sliver::Hook
 
   def expected_token
     @expected_token ||= Digest::SHA1.hexdigest(
-      "#{params['id']}:#{action.configuration.sso_salt}:#{params['timestamp']}"
+      "#{params['resource_id']}:#{action.configuration.sso_salt}:#{params['timestamp']}"
     ).to_s
   end
 
@@ -26,6 +26,6 @@ class MaitreD::API::SSOGuard < Sliver::Hook
   end
 
   def valid_token?
-    expected_token == params['token']
+    expected_token == params['resource_token']
   end
 end

@@ -41,7 +41,7 @@ h2. Listeners
 
 Your listener class should handle the following four methods:
 
-h3. @provision(heroku_id, plan, region, callback_url, logplex_token, options)@
+h3. @provision(params)@
 
 This gets called when the provider is requesting an app be provisioned within your service, and expects a hash to be returned with the following keys:
 
@@ -54,7 +54,7 @@ This gets called when the provider is requesting an app be provisioned within yo
   <dd>An optional message that will be displayed when your add-on is added via the command-line.</dd>
 </dl>
 
-h3. @plan_change(resource_id, heroku_id, plan)@
+h3. @plan_change(resource_id, plan)@
 
 This gets called when an app is upgrading or downgrading from their current plan. You need to return a hash with the following keys:
 
@@ -83,13 +83,13 @@ Maître d' will check the token and timestamp provided, and sets up the nav-data
 Here's a very basic example:
 
 <pre><code>class HerokuListener
-  def provision(heroku_id, plan, region, callback_url, logplex_token, options)
-    plan   = Plan.find_by_name plan
+  def provision(params)
+    plan   = Plan.find_by_name params["plan"]
     widget = Widget.create(
-      :heroku_id    => heroku_id,
-      :callback_url => callback_url,
+      :heroku_id    => params["uuid"],
+      :callback_url => params["callback_url"],
       :plan         => plan,
-      :region       => region
+      :region       => params["region"]
     )
 
     {
@@ -99,9 +99,9 @@ Here's a very basic example:
     }
   end
 
-  def plan_change(resource_id, heroku_id, plan)
+  def plan_change(resource_id, plan)
     plan   = Plan.find_by_name plan
-    widget = Widget.find resource_id
+    widget = Widget.find_by! heroku_id: resource_id
     widget.plan = plan
     widget.save
 
@@ -109,12 +109,12 @@ Here's a very basic example:
   end
 
   def deprovision(resource_id)
-    widget = Widget.find resource_id
+    widget = Widget.find_by! heroku_id: resource_id
     widget.destroy
   end
 
   def single_sign_on(resource_id)
-    widget = Widget.find resource_id
+    widget = Widget.find_by! heroku_id: resource_id
 
     {
       :uri     => '/my/dashboard',

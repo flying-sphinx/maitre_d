@@ -1,14 +1,14 @@
 class HerokuListener
-  def provision(heroku_id, plan, region, callback_url, logplex_token, options)
+  def provision(params)
     {
       :id      => '123',
       :config  => {'FOO_PROVISIONED' => 'true'},
       :message => 'Add-on provisioned!',
-      :region  => region
+      :region  => params["region"]
     }
   end
 
-  def plan_change(resource_id, heroku_id, plan)
+  def plan_change(resource_id, plan)
     {
       :config  => {'FOO_PROVISIONED' => 'false'},
       :message => 'Add-on upgraded or downgraded.'

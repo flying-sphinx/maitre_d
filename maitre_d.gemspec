@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'sliver',     '~> 0.2.2'
   s.add_runtime_dependency 'multi_json', '>= 1.3.0'
 
-  s.add_development_dependency 'combustion',  '~> 0.5'
+  s.add_development_dependency 'combustion',  '~> 1.3'
   s.add_development_dependency 'kensa',       '2.1.0'
-  s.add_development_dependency 'rails',       '~> 4.2'
-  s.add_development_dependency 'rspec-rails', '~> 3.6'
+  s.add_development_dependency 'rails',       '~> 6.0'
+  s.add_development_dependency 'rspec-rails', '~> 4.0'
 end

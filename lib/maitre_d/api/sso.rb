@@ -6,7 +6,7 @@ class MaitreD::API::SSO
   end
 
   def call
-    hash = listener.single_sign_on params['id']
+    hash = listener.single_sign_on params['resource_id']
 
     hash[:session] ||= {}
     hash[:session].each { |key, value| session[key] = value }
